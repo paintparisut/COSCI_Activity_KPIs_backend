@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 require("../db");
+const { verify } = require("../jwt");
 
 //public zone
-const { verify } = require("../jwt");
+
 
 // scured veify zone
 
