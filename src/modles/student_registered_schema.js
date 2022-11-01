@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const schema = mongoose.schema ({
+const schema = mongoose.Schema ({
     _id: {type: mongoose.Schema.Types.ObjectId, auto: true },
     user_id : String,
     name : String,
@@ -12,7 +12,7 @@ const schema = mongoose.schema ({
     tel : String,
     teacher : String,
     img_user : {type:String, default:"userimgdefault.jpg"}
-})
+});
 
 schema.index({user_id: 2,student_id: 5},{ unique: true ,unique: true})
 module.exports = mongoose.model("student_registered",schema)

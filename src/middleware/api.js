@@ -6,8 +6,7 @@ const { verify } = require("../jwt");
 //public zone
 
 
-// scured veify zone
-
+router.use('/admin',require('../routes/admin'));
 
 
 

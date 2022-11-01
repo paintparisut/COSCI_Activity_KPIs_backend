@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const schema = mongoose.schema ({
+const schema = mongoose.Schema ({
     id_event: {type: mongoose.Schema.Types.ObjectId, auto: true },
     name_event : String,
     detail_event : String,
@@ -12,7 +12,7 @@ const schema = mongoose.schema ({
     activity_hour : Number,
     event_type : String ,
     permissions_type : String,
-})
+});
 
 schema.index({id_event: 1},{ unique: true})
 module.exports = mongoose.model("request",schema)
