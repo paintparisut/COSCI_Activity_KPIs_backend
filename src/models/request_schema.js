@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 
 const schema = mongoose.Schema ({
-    _id: {type: mongoose.Schema.Types.ObjectId, auto: true },
     user_id : String,
     id_event : {type: mongoose.Schema.Types.ObjectId, required: true},
     password : String,
@@ -15,5 +14,4 @@ const schema = mongoose.Schema ({
     permissions_request : String,
 });
 
-schema.index({_id: 1},{ unique: true})
 module.exports = mongoose.model("request",schema)

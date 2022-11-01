@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 
 const schema = mongoose.Schema ({
-    id_event: {type: mongoose.Schema.Types.ObjectId, auto: true },
     name_event : String,
     detail_event : String,
     start_date : Date,
