@@ -8,7 +8,7 @@ const schema = mongoose.schema ({
     end_date : Date,
     posted_timestamp : {type: Date, default: Date.now},
     event_type : String,
-    event_img : String,
+    event_img : {type:String, default:"imgactivity.png"},
     activity_hour : Number,
     event_type : String ,
     permissions_type : String,
