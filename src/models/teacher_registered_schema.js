@@ -9,5 +9,5 @@ const schema = mongoose.Schema ({
     tel : String
 });
 
-schema.index({email: 5},{unique: true})
+schema.index({user_id: 1},{unique: true})
 module.exports = mongoose.model("teacher_registered",schema)

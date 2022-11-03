@@ -12,6 +12,5 @@ const schema = mongoose.Schema ({
     event_status : String ,
     permissions_type : String,
 });
-
-schema.index({id_event: 1},{ unique: true})
-module.exports = mongoose.model("request",schema)
+schema.index({permissions_type: 10},{ unique: false})
+module.exports = mongoose.model("event",schema)

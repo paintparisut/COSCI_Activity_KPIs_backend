@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://127.0.0.1/cosciactivitykpis", {
+  .connect("mongodb://localhost:27017/cosciactivitykpis", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
