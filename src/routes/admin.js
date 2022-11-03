@@ -7,6 +7,7 @@ const AdminController = require('../controller/AdminController');
 
 router.post('/admin-add-activity',jwt.verify,AdminController.uploadevent)
 
-router.get('/admin-activity-dashboard',AdminController.getkpi)
+router.get('/admin-kpi-dashboard',AdminController.getkpi)
+router.get('/admin-activity-dashboard',AdminController.getactivity)
 
 module.exports = router;

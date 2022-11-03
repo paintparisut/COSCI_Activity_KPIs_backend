@@ -23,22 +23,20 @@ exports.uploadevent = async(req,res) => {
 }
 
 exports.getkpi = async(req,res) => { 
-    const event = req.event
-
+        // const event = req.event
     try {
         // const user_data = await Event.findById(event);
-        // if(!user_data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+        // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
 
-        // const data = await Event.find({$: [
-        //     { permissions_type: "teacher" },
-        // ]})
+        const data = await Event.find({ permissions_type: "teacher" } )
+
         if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
 
         const kpi_data = []
 
         for(let i = 0; i < data.length; i++) {
             const schema = {
-                id: data[i]._id,
+                _id: data[i]._id,
                 name_event: data[i].name_event,
                 detail_event: data[i].detail_event,
                 start_date: data[i].start_date,
@@ -53,10 +51,41 @@ exports.getkpi = async(req,res) => {
             kpi_data.push(schema)
         }
 
-        const sorted_data = _data.sort((a, b) => a.moment.valueOf() - b.moment.valueOf())
+        res.status(200).json({result: 'OK', message: 'success get all kpisdata', data: {kpi: kpi_data}});
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
+}
 
-        res.status(200).json({result: 'OK', message: 'success get all data', data: {transactions: sorted_data.reverse()}});
-        
+exports.getactivity = async(req,res) => { 
+        // const event = req.event
+    try {
+        // const user_data = await Event.findById(event);
+        // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+        const data = await Event.find({ permissions_type: "student" } )
+
+        if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+        const act_data = []
+
+        for(let i = 0; i < data.length; i++) {
+            const schema = {
+                _id: data[i]._id,
+                name_event: data[i].name_event,
+                detail_event: data[i].detail_event,
+                start_date: data[i].start_date,
+                end_date: data[i].end_date,
+                posted_timestamp: data[i].posted_timestamp,
+                event_type: data[i].event_type,
+                event_img: data[i].event_img,
+                activity_hour: data[i].activity_hour,
+                event_status: data[i].event_status,
+                permissions_type: data[i].permissions_type
+            }
+            act_data.push(schema)
+        }
+        res.status(200).json({result: 'OK', message: 'success get all kpisdata', data: {kpi: act_data}});
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
