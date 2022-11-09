@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const schema = mongoose.Schema ({
     user_id : String,
     id_event : {type: mongoose.Schema.Types.ObjectId, required: true},
-    password : String,
+    user_id : String,
     start_date : Date,
     end_date : Date,
     uploaded_img : String,

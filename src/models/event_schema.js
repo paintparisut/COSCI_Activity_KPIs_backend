@@ -9,7 +9,7 @@ const schema = mongoose.Schema ({
     event_type : String,
     event_img : {type:String, default:"imgactivity.png"},
     activity_hour : Number,
-    event_status : String ,
+    event_status : Boolean ,
     permissions_type : String,
 });
 

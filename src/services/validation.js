@@ -13,8 +13,7 @@ const createEventValidation = (data) => {
         posted_timestamp : Joi.date()
                             .greater('now')
                             .required(),
-        event_type : Joi.string()
-                        .required(),
+        event_type : Joi.boolean(),
         event_img : Joi.string(),
         activity_hour : Joi.number()
                         .max(99)
@@ -27,4 +26,27 @@ const createEventValidation = (data) => {
     return schema.validate(data);
 };
 
+const createRequestValidation = (data) => {
+    const schema = Joi.object({
+
+    });
+    return schema.validate(data);
+};
+
+const registerTeacherValidation = (data) => {
+    const schema = Joi.object({
+
+    });
+    return schema.validate(data);
+};
+const registerStudentValidation = (data) => {
+    const schema = Joi.object({
+
+    });
+    return schema.validate(data);
+};
+
+module.exports.registerTeacherValidation = registerTeacherValidation;
+module.exports.registerStudentValidation = registerStudentValidation;
+module.exports.createRequestValidation = createRequestValidation;
 module.exports.createEventValidation = createEventValidation;
