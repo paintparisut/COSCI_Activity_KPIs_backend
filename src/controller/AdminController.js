@@ -1,3 +1,4 @@
+const { date } = require('joi');
 const Event = require('../models/event_schema');
 const Request = require('../models/request_schema');
 const StudentRegister = require('../models/student_registered_schema');
@@ -7,16 +8,14 @@ const {createEventValidation} = require('../services/validation');
 
 exports.uploadevent = async(req,res) => {
 
-    const userId = req.userId
-    // const { error } = createEventValidation(req.body);
-    // if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
+    const { error } = createEventValidation(req.body);
+    if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
 
     try {
 
-        const user_data = await Event.findById(userId);
-        if(!user_data) return res.status(404).json({result: 'Not found', message: '', data: {}});
-
-        req.body.create_event = userId
+        // req.body.start_date = Date.now()
+        // req.body.end_date = Date.now()
+        req.body.posted_timestamp = Date.now()
         const data = await Event.create(req.body)
 
         res.status(200).json({result: 'OK', message: 'success create event', data: data});
@@ -164,4 +163,78 @@ exports.getrequestteacher = async(req,res) => {
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
+}
+
+exports.getkpiactive = async(req,res) => { 
+    // const event = req.event
+try {
+    // const user_data = await Event.findById(event);
+    // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+    const data = await Event.find({ 
+        permissions_type: "teacher",
+        event_status: true
+     } )
+
+    if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+    const kpi_data = []
+
+    for(let i = 0; i < data.length; i++) {
+        const schema = {
+            _id: data[i]._id,
+            name_event: data[i].name_event,
+            detail_event: data[i].detail_event,
+            start_date: data[i].start_date,
+            end_date: data[i].end_date,
+            posted_timestamp: data[i].posted_timestamp,
+            event_type: data[i].event_type,
+            event_img: data[i].event_img,
+            activity_hour: data[i].activity_hour,
+            event_status: data[i].event_status,
+            permissions_type: data[i].permissions_type
+        }
+        kpi_data.push(schema)
+    }
+
+    res.status(200).json({result: 'OK', message: 'success get all kpisdata', data: {kpi: kpi_data}});
+} catch (e) {
+    res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+}
+}
+
+exports.getactivityactive = async(req,res) => { 
+    // const event = req.event
+try {
+    // const user_data = await Event.findById(event);
+    // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+    const data = await Event.find({ 
+        permissions_type: "student",
+        event_status: true
+     } )
+    if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+    const act_data = []
+
+    for(let i = 0; i < data.length; i++) {
+        const schema = {
+            _id: data[i]._id,
+            name_event: data[i].name_event,
+            detail_event: data[i].detail_event,
+            start_date: data[i].start_date,
+            end_date: data[i].end_date,
+            posted_timestamp: data[i].posted_timestamp,
+            event_type: data[i].event_type,
+            event_img: data[i].event_img,
+            activity_hour: data[i].activity_hour,
+            event_status: data[i].event_status,
+            permissions_type: data[i].permissions_type
+        }
+        act_data.push(schema)
+    }
+    res.status(200).json({result: 'OK', message: 'success get all activity data', data: {kpi: act_data}});
+} catch (e) {
+    res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+}
 }

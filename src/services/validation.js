@@ -6,18 +6,16 @@ const createEventValidation = (data) => {
                     .required(),
         detail_event : Joi.string()
                     .required(),
-        star_date : Joi.date()
-                    .required(),
-        end_date : Joi.date()
-                    .required(),
-        posted_timestamp : Joi.date()
-                            .greater('now')
-                            .required(),
-        event_type : Joi.boolean(),
+        star_date : Joi.date(),
+        end_date : Joi.date(),
+        posted_timestamp : Joi.date(),
+        event_type : Joi.string(),
         event_img : Joi.string(),
         activity_hour : Joi.number()
                         .max(99)
                         .min(0)
+                        .required(),
+        event_status : Joi.boolean()
                         .required(),
         permissions_type : Joi.string()
                             .required()
