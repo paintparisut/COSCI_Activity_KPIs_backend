@@ -1,21 +1,34 @@
 const { date } = require('joi');
+const multer = require('multer');
+
 const Event = require('../models/event_schema');
 const Request = require('../models/request_schema');
 const StudentRegister = require('../models/student_registered_schema');
 const TeacherRegister = require('../models/teacher_registered_schema');
 
 const {createEventValidation} = require('../services/validation');
+const currentTime = Date.now();
 
-exports.uploadevent = async(req,res) => {
+const storageImg = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploaded/')
+    },
+    filename: (req, file, cb) => {
+        cb(null, currentTime + '-' + file.originalname)
+    }
+});
 
+exports.uploadevent = async(req,res) => {   //+ img
+
+    
     const { error } = createEventValidation(req.body);
     if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
 
     try {
+        //check user
+        
 
-        // req.body.start_date = Date.now()
-        // req.body.end_date = Date.now()
-        req.body.posted_timestamp = Date.now()
+        req.body.posted_timestamp = currentTime
         const data = await Event.create(req.body)
 
         res.status(200).json({result: 'OK', message: 'success create event', data: data});

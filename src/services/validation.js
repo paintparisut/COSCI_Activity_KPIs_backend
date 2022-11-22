@@ -33,13 +33,63 @@ const createRequestValidation = (data) => {
 
 const registerTeacherValidation = (data) => {
     const schema = Joi.object({
-
+        user_id : Joi.string()
+                    .required(),
+        name : Joi.string()
+                .required(),
+        password : Joi.string()
+                    .min(6)
+                    .max(32)
+                    .required(),
+        role : Joi.string()
+                .required(),
+        email : Joi.string()
+                .email()
+                .required(),
+        tel : Joi.string()
+                .length(10)
+                .required(),
     });
     return schema.validate(data);
 };
+
 const registerStudentValidation = (data) => {
     const schema = Joi.object({
+        user_id : Joi.string()
+                .length(11)
+                .required(),
+        name : Joi.string()
+                .required(),
+        password : Joi.string()
+                .min(6)
+                .max(32)
+                .required(),
+        student_id : Joi.string()
+                .length(11)
+                .required(),
+        teacher :  Joi.string()
+                .required(),
+        major :  Joi.string()
+                .required(),
+        email :  Joi.string()
+                 .email()
+                .required(),
+        tel :  Joi.string()
+                .length(10)
+                .required(),
+        teacher :  Joi.string()
+                 .required(),
+        img_user : Joi.string(),
+    });
+    return schema.validate(data);
+};
 
+const loginValidation = data => {
+    const schema = Joi.object({
+            user_id : Joi.string()
+                    .required(),
+            password : Joi.string()
+                    .required()
     });
     return schema.validate(data);
 };
@@ -48,3 +98,4 @@ module.exports.registerTeacherValidation = registerTeacherValidation;
 module.exports.registerStudentValidation = registerStudentValidation;
 module.exports.createRequestValidation = createRequestValidation;
 module.exports.createEventValidation = createEventValidation;
+module.exports.loginValidation = loginValidation;

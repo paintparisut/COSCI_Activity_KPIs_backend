@@ -6,13 +6,13 @@ const jwt = require('../jwt');
 const AdminController = require('../controller/AdminController');
 
 // router.post('/admin-add-activity',jwt.verify,AdminController.uploadevent)
-router.post('/admin-add-activity',AdminController.uploadevent)
+router.post('/add-activity',AdminController.uploadevent)
 
-router.get('/admin-kpi-dashboard',AdminController.getkpi)
-router.get('/admin-activity-dashboard',AdminController.getactivity)
-router.get('/admin-reqteacher-dashboard',AdminController.getrequestteacher)
-router.get('/admin-reqstudent-dashboard',AdminController.getrequeststudent)
-router.get('/admin-kpi-active-dashboard',AdminController.getkpiactive)
-router.get('/admin-activity-active-dashboard',AdminController.getactivityactive)
+router.get('/kpi-dashboard',AdminController.getkpi)
+router.get('/activity-dashboard',AdminController.getactivity)
+router.get('/reqteacher-dashboard',AdminController.getrequestteacher)
+router.get('/reqstudent-dashboard',AdminController.getrequeststudent)
+router.get('/kpi-active-dashboard',AdminController.getkpiactive)
+router.get('/activity-active-dashboard',AdminController.getactivityactive)
 
 module.exports = router;
