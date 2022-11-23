@@ -26,8 +26,9 @@ exports.uploadevent = async(req,res) => {   //+ img
 
     try {
         //check user
-        
 
+        req.body.end_date =currentTime
+        req.body.start_date = currentTime
         req.body.posted_timestamp = currentTime
         const data = await Event.create(req.body)
 
@@ -68,7 +69,7 @@ exports.getkpi = async(req,res) => {
             kpi_data.push(schema)
         }
 
-        res.status(200).json({result: 'OK', message: 'success get all kpisdata', data: {kpi: kpi_data}});
+        res.status(200).json({result: 'OK', message: 'success get all kpisdata', data: {data: kpi_data}});
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
@@ -102,7 +103,7 @@ exports.getactivity = async(req,res) => {
             }
             act_data.push(schema)
         }
-        res.status(200).json({result: 'OK', message: 'success get all activity data', data: {kpi: act_data}});
+        res.status(200).json({result: 'OK', message: 'success get all activity data', data: {data: act_data}});
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
@@ -137,7 +138,7 @@ exports.getrequeststudent = async(req,res) => {
             req_data.push(schema)
         }
 
-        res.status(200).json({result: 'OK', message: 'success get all student req', data: {req: req_data}});
+        res.status(200).json({result: 'OK', message: 'success get all student req', data: {data: req_data}});
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
@@ -172,7 +173,7 @@ exports.getrequestteacher = async(req,res) => {
             req_data.push(schema)
         }
 
-        res.status(200).json({result: 'OK', message: 'success get all teacher req', data: {req: req_data}});
+        res.status(200).json({result: 'OK', message: 'success get all teacher req', data: {data: req_data}});
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
@@ -210,7 +211,7 @@ try {
         kpi_data.push(schema)
     }
 
-    res.status(200).json({result: 'OK', message: 'success get all kpisdata', data: {kpi: kpi_data}});
+    res.status(200).json({result: 'OK', message: 'success get all kpisdata', data: {data: kpi_data}});
 } catch (e) {
     res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
 }
@@ -246,7 +247,7 @@ try {
         }
         act_data.push(schema)
     }
-    res.status(200).json({result: 'OK', message: 'success get all activity data', data: {kpi: act_data}});
+    res.status(200).json({result: 'OK', message: 'success get all activity data', data: {data: act_data}});
 } catch (e) {
     res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
 }

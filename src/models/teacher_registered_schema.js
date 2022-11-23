@@ -6,7 +6,8 @@ const schema = mongoose.Schema ({
     password : String,
     role : String,
     email : String,
-    tel : String
+    tel : String,
+    img_user : {type:String, default:"userimgdefault.jpg"}
 });
 
 schema.index({user_id: 1},{unique: true})

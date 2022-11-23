@@ -4,8 +4,8 @@ const jwt = require('../jwt');
 const StudentController = require('../controller/StudentController');
 
 
-router.get('/request-history',StudentController.reqHistory)
-router.get('/activity-active',StudentController.getactivityactive)
+router.get('/request-history',jwt.verify,StudentController.reqHistory)
+router.get('/activity-active',jwt.verify,StudentController.getactivityactive)
 
 
 module.exports = router;

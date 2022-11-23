@@ -91,7 +91,7 @@ try {
         }
         act_data.push(schema)
     }
-    res.status(200).json({result: 'OK', message: 'success get all activity data', data: {kpi: act_data}});
+    res.status(200).json({result: 'OK', message: 'success get all activity data', data: {data: act_data}});
 } catch (e) {
     res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
 }

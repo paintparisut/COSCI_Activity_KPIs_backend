@@ -48,6 +48,7 @@ const registerTeacherValidation = (data) => {
                 .required(),
         tel : Joi.string()
                 .length(10)
+                .pattern(/^[0-9]+$/)
                 .required(),
     });
     return schema.validate(data);
@@ -76,6 +77,7 @@ const registerStudentValidation = (data) => {
                 .required(),
         tel :  Joi.string()
                 .length(10)
+                .pattern(/^[0-9]+$/)
                 .required(),
         teacher :  Joi.string()
                  .required(),
@@ -94,8 +96,18 @@ const loginValidation = data => {
     return schema.validate(data);
 };
 
+const fetchUserUploadedValidation = data => {
+        const schema = Joi.object({
+                user_id : Joi.string()
+                        .required(),
+        });
+        return schema.validate(data);
+};
+
+
 module.exports.registerTeacherValidation = registerTeacherValidation;
 module.exports.registerStudentValidation = registerStudentValidation;
 module.exports.createRequestValidation = createRequestValidation;
 module.exports.createEventValidation = createEventValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.fetchUserUploadedValidation = fetchUserUploadedValidation;

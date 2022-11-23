@@ -2,8 +2,10 @@ const StudentRegister = require('../models/student_registered_schema');
 const TeacherRegister = require('../models/teacher_registered_schema');
 const StudentUploaded = require('../models/student_uploaded_schema');
 const TeacherUploaded = require('../models/teacher_uploaded_schema');
+const bcrypt = require('bcryptjs');
+const jwt = require('../jwt');
 
-const {registerStudentValidation,registerTeacherValidation,loginValidation} = require('../services/validation');
+const {registerStudentValidation,registerTeacherValidation,loginValidation,fetchUserUploadedValidation} = require('../services/validation');
 
 const gswu_regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@g.swu.ac.th$/
 
@@ -14,7 +16,7 @@ exports.registerStudent = async (req,res) => {
 
     if (!gswu_regex.test(req.body.email)) return res.status(200).json({result: 'nOK', message: 'Please use g.swu.ac.th email domain', data: {}});
 
-    const usernameExist = await StudentRegister.findOne({username: req.body.user_id});
+    const usernameExist = await StudentRegister.findOne({user_id: req.body.user_id});
     if (usernameExist) return res.status(200).json({result: 'nOK', message: 'Username already exists', data: {}});
 
     const emailExist = await StudentRegister.findOne({email: req.body.email});
@@ -22,8 +24,7 @@ exports.registerStudent = async (req,res) => {
 
     try {
         req.body.password = await bcrypt.hash(req.body.password, 8);
-
-        req.body.profile_pic = 'userimagedefault.png'
+        req.body.img_user = 'userimagedefault.png'
 
         const data = await StudentRegister.create(req.body);
         
@@ -35,14 +36,150 @@ exports.registerStudent = async (req,res) => {
             major: data.teacher,
             email: data.email,
             tel: data.tel,
-            teacher: data.teacher,
         }
 
         //otp
 
 
-        res.status(200).json({result: 'OK', message: 'success create account please verify account by email in 15 minutes', data: userSchema});
+        res.status(200).json({result: 'OK', message: 'create user success', data: userSchema});
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
 };
+
+exports.registerTeacher = async (req,res) => {
+
+    const { error } = registerTeacherValidation(req.body);
+    if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
+
+    if (!gswu_regex.test(req.body.email)) return res.status(200).json({result: 'nOK', message: 'Please use g.swu.ac.th email domain', data: {}});
+
+    const usernameExist = await TeacherRegister.findOne({user_id: req.body.user_id});
+    if (usernameExist) return res.status(200).json({result: 'nOK', message: 'Username already exists', data: {}});
+
+    const emailExist = await TeacherRegister.findOne({email: req.body.email});
+    if (emailExist) return res.status(200).json({result: 'nOK', message: 'Email already exists', data: {}});
+
+    try {
+        req.body.password = await bcrypt.hash(req.body.password, 8);
+        req.body.img_user = 'userimagedefault.png'
+
+        const data = await TeacherRegister.create(req.body);
+        
+        const userSchema = {
+            user_id : data.user_id,
+            name : data.name,
+            password : data.password,
+            role : data.role,
+            email : data.dataemail,
+            tel : data.tel
+        }
+        //otp
+
+        res.status(200).json({result: 'OK', message: 'create user success', data: userSchema});
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
+};
+
+exports.loginStudent = async (req,res) => {
+    const { error } = loginValidation(req.body);
+    if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
+
+    try {
+        // const { user_id, password } = req.body; 
+        const user_id = req.body.user_id
+        const password = req.body.password
+
+        const data = await StudentRegister.findOne({ user_id: user_id} );
+
+        if (data) {
+            const isPasswordValid = await bcrypt.compare(password, data.password);
+            if (isPasswordValid) {
+
+                const userSchema = {
+                    user_id: data.user_id,
+                    name: data.name,
+                    student_id: data.student_id,
+                    teacher: data.teacher,
+                    major: data.teacher,
+                    email: data.email,
+                    tel: data.tel,
+                    img_user: data.img_user
+                }
+  
+                const token = jwt.sign(userSchema);
+                console.log(token)
+
+                res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema });
+            } else {
+                res.status(200).json({ result: 'nOK', message: 'invalid username or password', data: {}});
+            }
+        } else {
+            res.status(200).json({ result: 'nOK', message: 'invalid username or password', data: {}});
+        }
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
+};
+
+exports.getStudentUploaded = async(req,res) => { 
+    const user_id = req.body.user_id
+try {
+
+    const { error } = fetchUserUploadedValidation(req.body);
+    if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
+
+    const data = await StudentUploaded.findOne({ 
+        user_id: user_id
+    } )
+
+    if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+    if (data.register_check == true) return res.status(200).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
+    
+    const userSchema = {
+        user_id : data.user_id,
+        name : data.name,
+        major : data.major,
+        teacher : data.major,
+        register_check: data.register_check
+    }
+
+    res.status(200).json({result: 'OK', message: 'success user data', data: {data: userSchema}});
+} catch (e) {
+    res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+}
+}
+
+
+exports.getTeacherUploaded = async(req,res) => { 
+    const user_id = req.body.user_id
+try {
+
+    const { error } = fetchUserUploadedValidation(req.body);
+    if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
+
+    const data = await TeacherUploaded.findOne({ 
+        user_id: user_id
+    } )
+
+    if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+    if (data.register_check == true) return res.status(200).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
+    
+    const userSchema = {
+        user_id : data.user_id,
+        name : data.name,
+        role : data.role,
+        email : data.email,
+        tel : data.tel,
+        register_check: data.register_check
+        
+    }
+    
+    res.status(200).json({result: 'OK', message: 'success user data', data: {data: userSchema}});
+} catch (e) {
+    res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+}
+}
