@@ -19,6 +19,9 @@ exports.registerStudent = async (req,res) => {
     const usernameExist = await StudentRegister.findOne({user_id: req.body.user_id});
     if (usernameExist) return res.status(200).json({result: 'nOK', message: 'Username already exists', data: {}});
 
+    const idExist = await StudentRegister.findOne({user_id: req.body.student_id});
+    if (idExist) return res.status(200).json({result: 'nOK', message: 'Student already exists', data: {}});
+
     const emailExist = await StudentRegister.findOne({email: req.body.email});
     if (emailExist) return res.status(200).json({result: 'nOK', message: 'Email already exists', data: {}});
 
@@ -87,7 +90,7 @@ exports.loginStudent = async (req,res) => {
     if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
 
     try {
-        // const { user_id, password } = req.body; 
+        
         const user_id = req.body.user_id
         const password = req.body.password
 
@@ -125,10 +128,11 @@ exports.loginStudent = async (req,res) => {
 
 exports.getStudentUploaded = async(req,res) => { 
     const user_id = req.body.user_id
-try {
 
     const { error } = fetchUserUploadedValidation(req.body);
     if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
+
+try {
 
     const data = await StudentUploaded.findOne({ 
         user_id: user_id
@@ -155,10 +159,11 @@ try {
 
 exports.getTeacherUploaded = async(req,res) => { 
     const user_id = req.body.user_id
-try {
 
     const { error } = fetchUserUploadedValidation(req.body);
     if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
+
+try {
 
     const data = await TeacherUploaded.findOne({ 
         user_id: user_id
@@ -166,7 +171,7 @@ try {
 
     if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
 
-    if (data.register_check == true) return res.status(200).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
+    if (data.register_check == true) return res.status(403).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
     
     const userSchema = {
         user_id : data.user_id,
@@ -182,4 +187,77 @@ try {
 } catch (e) {
     res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
 }
+}
+
+exports.studentcheck = async (req,res) => {
+
+    const userid = req.body.student_id
+
+    const { error } = registerStudentValidation(req.body);
+    if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
+
+    try {
+
+        const data = await StudentUploaded.findOne({ 
+            user_id: userid
+        } )
+
+        if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+        if(data.register_check === true) return res.status(403).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
+  
+        data.register_check = true
+
+        const newData = await StudentUploaded.findOneAndUpdate({ user_id: userid}, data)
+
+        const schema = {
+            user_id : newData.user_id,
+            name : newData.name,
+            major : newData.major,
+            teacher : newData.teacher,
+            register_check: data.register_check
+        }
+
+        res.status(200).json({result: 'OK', message: 'success checked student', data: schema});
+        
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
+}
+
+exports.teachercheck = async (req,res) => {
+
+    const userid = req.body.user_id
+
+    const { error } = registerTeacherValidation(req.body);
+    if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
+
+    try {
+
+        const data = await TeacherUploaded.findOne({ 
+            user_id: userid
+        } )
+
+        if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+        if(data.register_check === true) return res.status(403).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
+  
+        data.register_check = true
+
+        const newData = await TeacherUploaded.findOneAndUpdate({user_id: userid}, data)
+
+        const schema = {
+            user_id : newData.user_id,
+            name : newData.name,
+            role : newData.role,
+            email : newData.email,
+            tel : newData.tel,
+            register_check: true
+        }
+
+        res.status(200).json({result: 'OK', message: 'success checked student', data: schema});
+        
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
 }

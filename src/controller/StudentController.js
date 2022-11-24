@@ -1,6 +1,5 @@
 const Event = require('../models/event_schema');
 const Request = require('../models/request_schema');
-const Users = require('../models/student_registered_schema');
 const StudentRegister = require('../models/student_registered_schema');
 const {createRequestValidation} = require('../services/validation');
 
@@ -58,9 +57,8 @@ exports.studentRequest = async(req,res) => {
     }catch (e){
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
-
-
 }
+
 exports.getactivityactive = async(req,res) => { 
     // const event = req.event
 try {

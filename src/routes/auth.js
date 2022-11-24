@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('../jwt');
 
 const AuthController = require('../controller/AuthController');
 
 
-router.post('/student_register',AuthController.registerStudent)
-router.post('/teacher_register',AuthController.registerTeacher)
-router.post('/login_student', AuthController.loginStudent);
-router.post('/login_student', AuthController.loginStudent);
+router.post('/student-register',AuthController.registerStudent)
+router.post('/teacher-register',AuthController.registerTeacher)
+router.post('/login-student', AuthController.loginStudent);
+router.post('/login-student', AuthController.loginStudent);
 
-router.get('/getstudent_uploaded', AuthController.getStudentUploaded);
-router.get('/getteacher_uploaded', AuthController.getTeacherUploaded);
+router.get('/getstudent-uploaded', AuthController.getStudentUploaded);
+router.get('/getteacher-uploaded', AuthController.getTeacherUploaded);
+router.patch('/student-check', AuthController.studentcheck);
+router.patch('/teacher-check', AuthController.teachercheck);
 
 
 
