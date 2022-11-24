@@ -37,7 +37,7 @@ exports.reqHistory = async(req,res) => {
             req_data.push(schema)
         }
 
-        res.status(200).json({result: 'OK', message: 'success get student req history', data: {req: req_data}});
+        res.status(200).json({result: 'OK', message: 'success get student req history', data: {data: req_data}});
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
