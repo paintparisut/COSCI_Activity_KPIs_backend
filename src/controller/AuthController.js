@@ -111,7 +111,53 @@ exports.loginStudent = async (req,res) => {
                     img_user: data.img_user
                 }
   
-                const token = jwt.sign(userSchema);
+                const id = {
+                    _id : data._id
+                }
+
+                const token = jwt.sign(id);
+                console.log(token)
+
+                res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema });
+            } else {
+                res.status(200).json({ result: 'nOK', message: 'invalid username or password', data: {}});
+            }
+        } else {
+            res.status(200).json({ result: 'nOK', message: 'invalid username or password', data: {}});
+        }
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
+};
+
+exports.loginTeacher = async (req,res) => {
+    const { error } = loginValidation(req.body);
+    if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
+
+    try {
+        
+        const user_id = req.body.user_id
+        const password = req.body.password
+
+        const data = await TeacherRegister.findOne({ user_id: user_id} );
+
+        if (data) {
+            const isPasswordValid = await bcrypt.compare(password, data.password);
+            if (isPasswordValid) {
+
+                const userSchema = {
+                    user_id : data.user_id,
+                    name : data.name,
+                    role : data.role,
+                    email : data.email,
+                    tel : data.tel,
+                    img_user : data.img_user
+                }
+                const id = {
+                    _id : data._id
+                }
+  
+                const token = jwt.sign(id);
                 console.log(token)
 
                 res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema });

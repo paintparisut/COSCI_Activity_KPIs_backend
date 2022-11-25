@@ -42,16 +42,17 @@ exports.reqHistory = async(req,res) => {
     }
 }
 
-exports.studentRequest = async(req,res) => {
+exports.createRequest = async(req,res) => {
 
     const { error } = createRequestValidation(req.body);
     if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
 
     try {
 
-        req.body.posted_timestamp = Date.now()
-        const data = await Event.create(req.body)
+        req.body.date_request = Date.now()
+        const data = await Request.create(req.body)
 
+    
         res.status(200).json({result: 'OK', message: 'success create event', data: data});
 
     }catch (e){

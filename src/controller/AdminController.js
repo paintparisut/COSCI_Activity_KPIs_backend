@@ -7,18 +7,8 @@ const {createEventValidation,createRequestValidation} = require('../services/val
 
 const currentTime = Date.now();
 
-const storageImg = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/uploaded/')
-    },
-    filename: (req, file, cb) => {
-        cb(null, currentTime + '-' + file.originalname)
-    }
-});
-
 exports.uploadevent = async(req,res) => {   //+ img
 
-    
     const { error } = createEventValidation(req.body);
     if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
 
@@ -33,14 +23,15 @@ exports.uploadevent = async(req,res) => {   //+ img
     }catch (e){
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
-
 }
 
 exports.getkpi = async(req,res) => { 
-        // const event = req.event
+        const userId = req.userId
+
+        const user_data = await TeacherRegister.find(userId);
+        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
     try {
-        // const user_data = await Event.findById(event);
-        // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
 
         const data = await Event.find({ permissions_type: "teacher" } )
 
@@ -72,11 +63,13 @@ exports.getkpi = async(req,res) => {
 }
 
 exports.getactivity = async(req,res) => { 
-        // const event = req.event
-    try {
-        // const user_data = await Event.findById(event);
-        // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+        const userId = req.userId
 
+        const user_data = await TeacherRegister.find(userId);
+        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+    try {
+       
         const data = await Event.find({ permissions_type: "student" } )
 
         if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
@@ -106,11 +99,13 @@ exports.getactivity = async(req,res) => {
 }
 
 exports.getrequeststudent = async(req,res) => { 
-    // const event = req.
-    try {
-        // const user_data = await Event.findById(event);
-        // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+        const userId = req.userId
 
+        const user_data = await TeacherRegister.find(userId);
+        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+    try {
+      
         const data = await Request.find({ permissions_request: "student" } )
 
         if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
@@ -141,13 +136,14 @@ exports.getrequeststudent = async(req,res) => {
 }
 
 exports.getrequestteacher = async(req,res) => { 
-    // const event = req.
+        const userId = req.userId
+
+        const user_data = await TeacherRegister.find(userId);
+        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
     try {
-        // const user_data = await Event.findById(event);
-        // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
-
+        
         const data = await Request.find({ permissions_request: "teacher" } )
-
         if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
 
         const req_data = []
@@ -176,11 +172,12 @@ exports.getrequestteacher = async(req,res) => {
 }
 
 exports.getkpiactive = async(req,res) => { 
-    // const event = req.event
-try {
-    // const user_data = await Event.findById(event);
-    // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+        const userId = req.userId
+        const user_data = await TeacherRegister.find(userId);
+        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
 
+    try {
+       
     const data = await Event.find({ 
         permissions_type: "teacher",
         event_status: true
@@ -214,11 +211,13 @@ try {
 }
 
 exports.getactivityactive = async(req,res) => { 
-    // const event = req.event
-try {
-    // const user_data = await Event.findById(event);
-    // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+        const userId = req.userId
 
+        const user_data = await TeacherRegister.find(userId);
+        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+    try {
+    
     const data = await Event.find({ 
         permissions_type: "student",
         event_status: true
@@ -250,11 +249,13 @@ try {
 }
 
 exports.studentCRUD = async(req,res) => { 
-    // const event = req.event
-try {
-    // const user_data = await Event.findById(event);
-    // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+        const userId = req.userId
 
+        const user_data = await TeacherRegister.find(userId);
+        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+    try {
+       
     const data = await StudentRegister.find()
     if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
 
@@ -282,11 +283,13 @@ try {
 }
 
 exports.teacherCRUD = async(req,res) => { 
-    // const event = req.event
-try {
-    // const user_data = await Event.findById(event);
-    // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+        const userId = req.userId
 
+        const user_data = await StudentRegister.find(userId);
+        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+    try {
+        
     const data = await TeacherRegister.find()
     if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
 

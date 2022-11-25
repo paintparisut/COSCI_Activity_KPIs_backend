@@ -7,7 +7,7 @@ const AuthController = require('../controller/AuthController');
 router.post('/student-register',AuthController.registerStudent)
 router.post('/teacher-register',AuthController.registerTeacher)
 router.post('/login-student', AuthController.loginStudent);
-router.post('/login-student', AuthController.loginStudent);
+router.post('/login-teacher', AuthController.loginTeacher);
 
 router.get('/getstudent-uploaded', AuthController.getStudentUploaded);
 router.get('/getteacher-uploaded', AuthController.getTeacherUploaded);

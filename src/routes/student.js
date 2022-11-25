@@ -6,6 +6,7 @@ const StudentController = require('../controller/StudentController');
 
 router.get('/request-history',jwt.verify,StudentController.reqHistory)
 router.get('/activity-active',jwt.verify,StudentController.getactivityactive)
+router.post('/request',jwt.verify,StudentController.createRequest)
 
 
 module.exports = router;
