@@ -47,8 +47,8 @@ module.exports = {
       }
 
       // if everything good, save to request for use in other routes
-      req.userId = decoded.id;
-      req.deviceId = decoded.device_id
+      req.userId = decoded.id
+      // req.deviceId = decoded.device_id
       next();
     });
   },

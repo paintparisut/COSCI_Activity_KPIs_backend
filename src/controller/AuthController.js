@@ -101,6 +101,7 @@ exports.loginStudent = async (req,res) => {
             if (isPasswordValid) {
 
                 const userSchema = {
+                    _id: data._id,
                     user_id: data.user_id,
                     name: data.name,
                     student_id: data.student_id,
@@ -110,12 +111,12 @@ exports.loginStudent = async (req,res) => {
                     tel: data.tel,
                     img_user: data.img_user
                 }
-  
-                const id = {
-                    _id : data._id
+                const payload = {
+                    id : data._id,
+                    user_id : data.user_id
                 }
 
-                const token = jwt.sign(id);
+                const token = jwt.sign(payload);
                 console.log(token)
 
                 res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema });
@@ -146,6 +147,7 @@ exports.loginTeacher = async (req,res) => {
             if (isPasswordValid) {
 
                 const userSchema = {
+                    _id: data._id,
                     user_id : data.user_id,
                     name : data.name,
                     role : data.role,
@@ -153,11 +155,13 @@ exports.loginTeacher = async (req,res) => {
                     tel : data.tel,
                     img_user : data.img_user
                 }
-                const id = {
-                    _id : data._id
+
+                const payload = {
+                    id : data._id,
+                    user_id : data.user_id
                 }
-  
-                const token = jwt.sign(id);
+
+                const token = jwt.sign(payload);
                 console.log(token)
 
                 res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema });
