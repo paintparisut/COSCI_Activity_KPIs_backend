@@ -4,8 +4,10 @@ const StudentUploaded = require('../models/student_uploaded_schema');
 const TeacherUploaded = require('../models/teacher_uploaded_schema');
 const bcrypt = require('bcryptjs');
 const jwt = require('../jwt');
-
-const {registerStudentValidation,registerTeacherValidation,loginValidation,fetchUserUploadedValidation} = require('../services/validation');
+const {registerStudentValidation} = require('../services/validation/registerStudentValidation');
+const {registerTeacherValidation} = require('../services/validation/registerTeacherValidation');
+const {loginValidation} = require('../services/validation/loginValidation');
+const {fetchUserUploadedValidation} = require('../services/validation/fetchUserUploadedValidation');
 
 const gswu_regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@g.swu.ac.th$/
 

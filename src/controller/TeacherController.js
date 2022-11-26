@@ -1,13 +1,13 @@
 const Event = require('../models/event_schema');
 const Request = require('../models/request_schema');
-const StudentRegister = require('../models/student_registered_schema');
-const {createRequestValidation} = require('../services/validation');
+const TeacherRegister = require('../models/teacher_registered_schema');
+const {createRequestValidation} = require('../services/validation/createRequestValidation');
 
 exports.reqHistory = async(req,res) => { 
-    const userid = req.body.user_id; //edit here
+    const userid = req.user_id 
     try {
-        // const user_data = await Event.findById(userid);
-        // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+        const user_data = await Event.find({user_id:userid});
+        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
 
         const data = await Request.find({ 
             permissions_request: "teacher" ,
@@ -42,10 +42,10 @@ exports.reqHistory = async(req,res) => {
 }
 
 exports.getkpiactive = async(req,res) => { 
-    // const event = req.event
+    const userid = req.userId 
 try {
-    // const user_data = await Event.findById(event);
-    // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+    const user_data = await TeacherRegister.findById(userid);
+    if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
 
     const data = await Event.find({ 
         permissions_type: "teacher",

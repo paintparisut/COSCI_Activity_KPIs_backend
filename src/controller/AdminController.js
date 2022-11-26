@@ -3,7 +3,8 @@ const Event = require('../models/event_schema');
 const Request = require('../models/request_schema');
 const StudentRegister = require('../models/student_registered_schema');
 const TeacherRegister = require('../models/teacher_registered_schema');
-const {createEventValidation,createRequestValidation} = require('../services/validation');
+const {createEventValidation} = require('../services/validation/createEventValidation');
+const {createRequestValidation} = require('../services/validation/createRequestValidation');
 
 const currentTime = Date.now();
 
@@ -30,7 +31,7 @@ exports.getkpi = async(req,res) => {
 
     try {
 
-        const user_data = await TeacherRegister.find(userId);
+        const user_data = await TeacherRegister.findById(userId);
         if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
 
         const data = await Event.find({ permissions_type: "teacher" } )
@@ -249,13 +250,12 @@ exports.getactivityactive = async(req,res) => {
 
 exports.studentCRUD = async(req,res) => { 
         const userId = req.userId
-
-        const user_data = await TeacherRegister.find(userId);
-        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
-
+        console.log(userId)
     try {
-       
-    const data = await StudentRegister.find(userId)
+    const user_data = await TeacherRegister.findById(userId);
+    if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+    const data = await StudentRegister.find()
     if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
 
     const student_data = []
@@ -317,7 +317,7 @@ exports.teacherCRUD = async(req,res) => {
 
 exports.editevent = async (req,res) => {
 
-    const id = req.headers._id
+    const id = req.headers.id_event
 
     const { error } = createEventValidation(req.body);
     if (error) return res.status(404).json({result: 'nOK', message: error.details[0].message, data: {}});
@@ -326,7 +326,8 @@ exports.editevent = async (req,res) => {
 
         const data = await Event.findById(id)
         
-        if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+        if(!data) return res.status(404).json({result: 'Not found', message: 'not found event', data: {}});
+
         data.name_event = req.body.name_event,
         data.detail_event = req.body.detail_event,
         data.start_date = req.body.start_date,
@@ -361,7 +362,7 @@ exports.editevent = async (req,res) => {
 
 exports.updateReq = async (req,res) => {
 
-    const id = req.headers._id
+    const id = req.headers.id_req
 
     const { error } = createRequestValidation(req.body);
     if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
