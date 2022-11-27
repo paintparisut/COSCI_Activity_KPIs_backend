@@ -9,11 +9,14 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
+    "generate-password": "^1.7.0",
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
     "mongoose": "^6.7.0",
     "multer": "^1.4.5-lts.1",
     "node-cache": "^5.1.2",
+    "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
     "path": "^0.12.7"
   }

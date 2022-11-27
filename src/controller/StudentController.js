@@ -98,6 +98,7 @@ try {
     res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
 }
 }
+
 exports.changepassword = async (req,res) => {
 
     const userid = req.userId
