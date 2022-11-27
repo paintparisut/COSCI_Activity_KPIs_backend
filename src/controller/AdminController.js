@@ -11,7 +11,7 @@ const currentTime = Date.now();
 exports.uploadevent = async(req,res) => {   //+ img
 
     const { error } = createEventValidation(req.body);
-    if (error) return res.status(404).json({result:'nOK',masage:error.details[0].message, data:{}});
+    if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
 
     try {
         //check user
@@ -320,7 +320,7 @@ exports.editevent = async (req,res) => {
     const id = req.headers.id_event
 
     const { error } = createEventValidation(req.body);
-    if (error) return res.status(404).json({result: 'nOK', message: error.details[0].message, data: {}});
+    if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
 
     try {
 

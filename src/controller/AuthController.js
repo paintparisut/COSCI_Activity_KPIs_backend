@@ -8,6 +8,7 @@ const {registerStudentValidation} = require('../services/validation/registerStud
 const {registerTeacherValidation} = require('../services/validation/registerTeacherValidation');
 const {loginValidation} = require('../services/validation/loginValidation');
 const {fetchUserUploadedValidation} = require('../services/validation/fetchUserUploadedValidation');
+const {forgotPasswordValidation} = require('../services/validation/forgotPasswordValidate');
 
 const gswu_regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@g.swu.ac.th$/
 
@@ -134,6 +135,7 @@ exports.loginStudent = async (req,res) => {
 };
 
 exports.loginTeacher = async (req,res) => {
+
     const { error } = loginValidation(req.body);
     if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
 
@@ -313,3 +315,23 @@ exports.teachercheck = async (req,res) => {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
 }
+
+// exports.forgotpasswordstudent = async (req,res) => {
+//     const userid = req.body.user_id
+
+//     const { error } = forgotPasswordValidation(userid);
+//     if (error) return res.status(404).json({result: 'nOK', message: error.details[0].message, data: {}});
+
+// }
+
+// exports.forgotpasswordteacher = async (req,res) => {
+//     const userid = req.body.user_id
+
+//     const { error } = forgotPasswordValidation(userid);
+//     if (error) return res.status(404).json({result: 'nOK', message: error.details[0].message, data: {}});
+
+// }
+
+
+
+

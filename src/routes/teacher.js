@@ -5,6 +5,7 @@ const TeacherController = require('../controller/TeacherController');
 
 router.get('/request-history',jwt.verify,TeacherController.reqHistory)
 router.get('/kpi-active',jwt.verify,TeacherController.getkpiactive)
+router.patch('/changepassword',jwt.verify,TeacherController.changepassword)
 
 
 module.exports = router;

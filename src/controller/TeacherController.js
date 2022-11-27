@@ -1,7 +1,9 @@
 const Event = require('../models/event_schema');
 const Request = require('../models/request_schema');
+const bcrypt = require('bcryptjs');
 const TeacherRegister = require('../models/teacher_registered_schema');
 const {createRequestValidation} = require('../services/validation/createRequestValidation');
+const {changePasswordValidation} = require('../services/validation/changPasswordValidate');
 
 exports.reqHistory = async(req,res) => { 
     const userid = req.user_id 
@@ -78,3 +80,40 @@ try {
     res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
 }
 }
+
+exports.changepassword = async (req,res) => {
+
+    const userid = req.userId
+
+    const { error } = changePasswordValidation(req.body);
+    if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
+
+    try {
+
+        const oldpassword = req.body.oldpassword
+        const newpassword = req.body.password
+
+        const data = await TeacherRegister.findById(userid)
+        if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+        if (data) {
+            console.log(data)
+            const isPasswordValid = await bcrypt.compare(oldpassword, data.password);
+            if (isPasswordValid) {
+
+                data.password = await bcrypt.hash(newpassword, 8);
+                const newData = await TeacherRegister.findByIdAndUpdate(userid, data)
+
+                res.status(200).json({result: 'OK', message: 'success change password', data: data});
+
+            } else {
+                res.status(200).json({ result: 'nOK', message: 'invalid password', data: {}});
+            }
+    } else {
+        res.status(404).json({ result: 'nOK', message: 'data not found', data: {}});
+    }
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
+}
+
