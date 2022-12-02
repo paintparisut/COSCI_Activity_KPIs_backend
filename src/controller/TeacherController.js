@@ -117,3 +117,54 @@ exports.changepassword = async (req,res) => {
     }
 }
 
+exports.createRequest = async(req,res) => {
+
+    const userId = req.userId
+    const { error } = createRequestValidation(req.body);
+    if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
+
+    try {
+        
+        const user_data = await TeacherRegister.findById(userId)
+        if(!user_data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+        const event_data = await Event.findById(req.body.id_event)
+        if(!event_data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+        req.body.date_request = Date.now()
+        req.body.permissions_request = "teacher"
+
+        const schema = {
+            user : {
+                id_user : user_data._id,
+                user_id : user_data.user_id,
+                name : user_data.name,
+            },
+            event : {
+                id_event : event_data._id,
+                name_event : event_data.name_event,
+                detail_event : event_data.detail_event,
+                start_date : event_data.start_date,
+                end_date : event_data.end_date,
+                posted_timestamp : event_data.posted_timestamp,
+                event_type : event_data.event_type,
+                event_img : event_data.event_img,
+                activity_hour : event_data.activity_hour,
+                event_status : event_data.event_status ,
+            },
+            start_date : req.body.start_date,
+            end_date : req.body.end_date,
+            uploaded_img : req.body.uploaded_img,
+            uploaded_pdf : req.body.uploaded_pdf,
+            status_request : req.body.status_request,
+            type_request : req.body.type_request ,
+            permissions_request : req.body.permissions_request,
+        }
+        const data = await Request.create(schema)
+    
+        res.status(200).json({result: 'OK', message: 'success create event', data: data});
+
+    }catch (e){
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
+}

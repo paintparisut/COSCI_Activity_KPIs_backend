@@ -1,8 +1,24 @@
 const mongoose = require("mongoose")
 
 const schema = mongoose.Schema ({
-    user_id : String,
-    id_event : {type: mongoose.Schema.Types.String, required: true},
+    user : {
+        id_user : String,
+        user_id : String,
+        name : String,
+        student_id : String,
+    },
+    event : {
+        id_event : String,
+        name_event : String,
+        detail_event : String,
+        start_date : Date,
+        end_date : Date,
+        posted_timestamp : {type: Date, default: Date.now},
+        event_type : String,
+        event_img : {type:String, default:"imgactivity.png"},
+        activity_hour : Number,
+        event_status : Boolean ,
+    },
     start_date : Date,
     end_date : Date,
     uploaded_img : String,

@@ -35,7 +35,6 @@ exports.getkpi = async(req,res) => {
         if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
 
         const data = await Event.find({ permissions_type: "teacher" } )
-
         if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
 
         const kpi_data = []
@@ -116,7 +115,8 @@ exports.getrequeststudent = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                id_event: data[i].id_event,
+                event: data[i].event,
+                user: data[i].user,
                 user_id: data[i].user_id,
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
@@ -152,7 +152,8 @@ exports.getrequestteacher = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                id_event: data[i].id_event,
+                user: data[i].user,
+                event: data[i].event,
                 user_id: data[i].user_id,
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
@@ -222,6 +223,7 @@ exports.getactivityactive = async(req,res) => {
         permissions_type: "student",
         event_status: true
      } )
+
     if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
 
     const act_data = []
