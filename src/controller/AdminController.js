@@ -5,8 +5,24 @@ const StudentRegister = require('../models/student_registered_schema');
 const TeacherRegister = require('../models/teacher_registered_schema');
 const {createEventValidation} = require('../services/validation/createEventValidation');
 const {createRequestValidation} = require('../services/validation/createRequestValidation');
+const {getEvent,getRequest} = require('../services/utilities');
 
 const currentTime = Date.now();
+
+exports.getEventData = async (req,res) => {
+
+    const eventData = await getEvent();
+    const requestData = await getRequest();
+    if (eventData === '500'||requestData === '500') return res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    
+    const formData = {
+        event: eventData,
+        request: requestData
+    }
+    
+    res.status(200).json({result: 'OK', message: 'success get form data', data: formData});
+};
+
 
 exports.uploadevent = async(req,res) => {   //+ img
 

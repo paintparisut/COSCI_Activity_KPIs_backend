@@ -1,5 +1,41 @@
 const generator = require('generate-password');
 const nodemailer = require('nodemailer');
+const NodeCache = require('node-cache')
+const Event = require('../models/event_schema')
+const Request = require('../models/request_schema')
+
+
+const eventCache = new NodeCache({ stdTTL: 604800 }) //7วัน
+
+const getEvent = async () => {
+
+    if (eventCache.has('event')) {
+        return eventCache.get('event')
+    }
+
+    try {
+        const data = await Event.find()
+        eventCache.set('event', data)
+        return data
+    } catch (e) {
+        return '500'
+    }
+}
+
+const getRequest = async () => {
+
+    if (eventCache.has('request')) {
+        return eventCache.get('request')
+    }
+
+    try {
+        const data = await Request.find()
+        eventCache.set('request', data)
+        return data
+    } catch (e) {
+        return '500'
+    }
+}
 
 
 const generatePassword = () => {
@@ -50,7 +86,8 @@ const mailer = (to,subject,html) => {
     });
 };
 
-
+exports.getEvent = getEvent;
+exports.getRequest = getRequest;
 exports.generateOtpcode = generateOtpcode;
 exports.mailer = mailer;
 exports.generatePassword = generatePassword;

@@ -9,6 +9,8 @@ router.patch('/update-req',jwt.verify,AdminController.updateReq)
 //activity
 router.post('/add-activity',jwt.verify,AdminController.uploadevent)
 router.get('/activity-dashboard',jwt.verify,AdminController.getactivity)
+router.get('/data',jwt.verify,AdminController.getEventData)
+
 
 //kpi
 router.get('/kpi-dashboard',jwt.verify,AdminController.getkpi)
