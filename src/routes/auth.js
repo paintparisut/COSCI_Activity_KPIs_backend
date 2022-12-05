@@ -14,8 +14,8 @@ router.post('/verify/resendstudent', AuthController.verifyResendCodeStudent);
 router.post('/verify/resendteacher', AuthController.verifyResendCodeTeacher);
 
 
-router.get('/getstudent-uploaded', AuthController.getStudentUploaded);
-router.get('/getteacher-uploaded', AuthController.getTeacherUploaded);
+router.post('/getstudent-uploaded', AuthController.StudentUploaded);
+router.post('/getteacher-uploaded', AuthController.TeacherUploaded);
 router.patch('/student-check', AuthController.studentcheck);
 router.patch('/teacher-check', AuthController.teachercheck);
 router.patch('/forgotpassword-student', AuthController.forgotpasswordstudent);

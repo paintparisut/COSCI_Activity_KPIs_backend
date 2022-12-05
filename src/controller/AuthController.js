@@ -490,7 +490,7 @@ exports.loginTeacher = async (req,res) => {
     }
 };
 
-exports.getStudentUploaded = async(req,res) => { 
+exports.StudentUploaded = async(req,res) => { 
     const user_id = req.body.user_id
 
     const { error } = fetchUserUploadedValidation(req.body);
@@ -521,7 +521,7 @@ try {
 }
 
 
-exports.getTeacherUploaded = async(req,res) => { 
+exports.TeacherUploaded = async(req,res) => { 
     const user_id = req.body.user_id
 
     const { error } = fetchUserUploadedValidation(req.body);
