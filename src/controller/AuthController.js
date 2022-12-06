@@ -16,7 +16,7 @@ const { generateOtpcode, mailer , generatePassword } = require('../services/util
 
 const gswu_regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@g.swu.ac.th$/
 
-exports.registerStudent = async (req,res) => {
+exports.registerStudent = async (req,res,next) => {
 
     const { error } = registerStudentValidation(req.body);
     if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
@@ -35,9 +35,6 @@ exports.registerStudent = async (req,res) => {
     try {
         req.body.password = await bcrypt.hash(req.body.password, 8);
         req.body.img_user = 'userimagedefault.png'
-        // const split = req.body.student_id.split("")
-        // const id = "co"+split[0]+split[1]+split[2]+split[5]+split[6]+split[7]+split[8]+split[9]+split[10]
-        // req.body.user_id = id
         const text = req.body.student_id
         const result1 = text.substr(0, 3);
         const result2 = text.substr(5, 11);
@@ -70,14 +67,15 @@ exports.registerStudent = async (req,res) => {
         await Otps.create(OTP_Schema);
 
         mailer(data.email,'Verify your account',`คุณ, ${data.name} <br><br>username : ${data.user_id} <br><br>รหัสยืนยันการสมัครสมาชิก : ${OTP_Schema.otp}`)
-        res.status(200).json({result: 'OK', message: 'success create account please verify account by email in 15 minutes', data: userSchema});
+        // res.status(200).json({result: 'OK', message: 'success create account please verify account by email in 15 minutes', data: userSchema});
+        next();
 
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
 };
 
-exports.registerTeacher = async (req,res) => {
+exports.registerTeacher = async (req,res,next) => {
 
     const { error } = registerTeacherValidation(req.body);
     if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
@@ -118,8 +116,8 @@ exports.registerTeacher = async (req,res) => {
         await Otps.create(OTP_Schema);
 
         mailer(data.email,'Verify your account',`คุณ, ${data.name} <br><br>username : ${data.user_id} <br><br>รหัสยืนยันการสมัครสมาชิก : ${OTP_Schema.otp}`)
-        res.status(200).json({result: 'OK', message: 'success create account please verify account by email in 15 minutes', data: userSchema});
-
+        // res.status(200).json({result: 'OK', message: 'success create account please verify account by email in 15 minutes', data: userSchema});
+        next();
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
@@ -565,11 +563,8 @@ exports.studentcheck = async (req,res) => {
 
     const userid = req.body.student_id
 
-    const { error } = registerStudentValidation(req.body);
-    if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
-
     try {
-
+        
         const data = await StudentUploaded.findOne({ 
             user_id: userid
         } )
@@ -600,9 +595,6 @@ exports.studentcheck = async (req,res) => {
 exports.teachercheck = async (req,res) => {
 
     const userid = req.body.user_id
-
-    const { error } = registerTeacherValidation(req.body);
-    if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
 
     try {
 
