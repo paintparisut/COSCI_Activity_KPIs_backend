@@ -2,9 +2,6 @@ const Joi = require('@hapi/joi');
 
 const registerStudentValidation = (data) => {
     const schema = Joi.object({
-        user_id : Joi.string()
-                .length(11)
-                .required(),
         name : Joi.string()
                 .required(),
         password : Joi.string()

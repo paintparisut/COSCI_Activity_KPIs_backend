@@ -35,6 +35,14 @@ exports.registerStudent = async (req,res) => {
     try {
         req.body.password = await bcrypt.hash(req.body.password, 8);
         req.body.img_user = 'userimagedefault.png'
+        // const split = req.body.student_id.split("")
+        // const id = "co"+split[0]+split[1]+split[2]+split[5]+split[6]+split[7]+split[8]+split[9]+split[10]
+        // req.body.user_id = id
+        const text = req.body.student_id
+        const result1 = text.substr(0, 3);
+        const result2 = text.substr(5, 11);
+        const result = "co" + result1 + result2
+        req.body.user_id = result
 
         const data = await StudentRegister.create(req.body);
         
