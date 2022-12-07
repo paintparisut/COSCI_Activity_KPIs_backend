@@ -8,6 +8,12 @@ const registerStudentValidation = (data) => {
                 .min(6)
                 .max(32)
                 .required(),
+        confirmpassword : Joi.string()
+                .min(6)
+                .max(32)
+                .valid(Joi.ref('password'))
+                .required(),
+    
         student_id : Joi.string()
                 .length(11)
                 .required(),

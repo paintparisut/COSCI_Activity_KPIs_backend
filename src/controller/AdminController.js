@@ -83,8 +83,8 @@ exports.getactivity = async(req,res) => {
 
     try {
 
-        const user_data = await TeacherRegister.findById(userId);
-        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+        // const user_data = await TeacherRegister.findById(userId);
+        // if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
 
         const data = await Event.find({ permissions_type: "student" } )
 

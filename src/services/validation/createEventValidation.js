@@ -6,7 +6,7 @@ const createEventValidation = (data) => {
                     .required(),
         detail_event : Joi.string()
                     .required(),
-        star_date : Joi.date(),
+        start_date : Joi.date(),
         end_date : Joi.date(),
         posted_timestamp : Joi.date(),
         event_type : Joi.string(),
