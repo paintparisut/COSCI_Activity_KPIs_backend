@@ -31,7 +31,7 @@ exports.registerStudent = async (req,res,next) => {
 
     const emailExist = await StudentRegister.findOne({email: req.body.email});
     if (emailExist) return res.status(200).json({result: 'nOK', message: 'Email already exists', data: {}});
-    
+
     const optExist = await Otps.findOne({email: req.body.email});
     if (optExist) return res.status(200).json({result: 'nOK', message: 'Check your otps', data: {}});
 
@@ -188,7 +188,7 @@ exports.verifystudent = async (req,res) => {
 
         const token = jwt.sign(payload);
 
-        res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema });
+        res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema ,token:token});
 
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
@@ -247,7 +247,7 @@ exports.verifyteacher = async (req,res) => {
 
         const token = jwt.sign(payload);
 
-        res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema });
+        res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema ,token:token});
 
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
@@ -465,7 +465,7 @@ exports.loginTeacher = async (req,res) => {
                     const token = jwt.sign(payload);
                     console.log(token)
     
-                    res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema });
+                    res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema ,token:token});
                 } else {
 
                     //send verify email
