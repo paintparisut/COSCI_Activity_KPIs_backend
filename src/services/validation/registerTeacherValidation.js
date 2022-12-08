@@ -10,6 +10,11 @@ const registerTeacherValidation = (data) => {
                     .min(6)
                     .max(32)
                     .required(),
+        confirmpassword : Joi.string()
+                    .min(6)
+                    .max(32)
+                    .valid(Joi.ref('password'))
+                    .required(),
         role : Joi.string()
                 .required(),
         email : Joi.string()
