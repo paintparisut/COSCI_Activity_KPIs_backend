@@ -372,7 +372,7 @@ exports.loginStudent = async (req,res) => {
                     const token = jwt.sign(payload);
                     console.log(token)
     
-                    res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema });
+                    res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema, token:token });
                 } else {
 
                     //send verify email
@@ -510,7 +510,7 @@ try {
 
     if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
 
-    if (data.register_check == true) return res.status(200).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
+    if (data.register_check == true) return res.status(400).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
     
     const userSchema = {
         user_id : data.user_id,
