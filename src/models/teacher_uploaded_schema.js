@@ -5,6 +5,7 @@ const schema = mongoose.Schema ({
     name : String,
     role : String,
     email : String,
+    gswu : String,
     tel : String,
     register_check:{type:Boolean, default:false}
 });

@@ -31,6 +31,9 @@ exports.registerStudent = async (req,res,next) => {
 
     const emailExist = await StudentRegister.findOne({email: req.body.email});
     if (emailExist) return res.status(200).json({result: 'nOK', message: 'Email already exists', data: {}});
+    
+    const optExist = await Otps.findOne({email: req.body.email});
+    if (optExist) return res.status(200).json({result: 'nOK', message: 'Check your otps', data: {}});
 
     try {
         req.body.password = await bcrypt.hash(req.body.password, 8);
@@ -82,16 +85,24 @@ exports.registerTeacher = async (req,res,next) => {
 
     if (!gswu_regex.test(req.body.email)) return res.status(200).json({result: 'nOK', message: 'Please use g.swu.ac.th email domain', data: {}});
 
+    const userFlag = await TeacherUploaded.findOne({
+        user_id: req.body.user_id,
+        register_check : false
+    });
+    if (!userFlag) return res.status(200).json({result: 'nOK', message: 'flag', data: {}});
+
     const usernameExist = await TeacherRegister.findOne({user_id: req.body.user_id});
     if (usernameExist) return res.status(200).json({result: 'nOK', message: 'Username already exists', data: {}});
 
     const emailExist = await TeacherRegister.findOne({email: req.body.email});
     if (emailExist) return res.status(200).json({result: 'nOK', message: 'Email already exists', data: {}});
 
+    const optExist = await Otps.findOne({email: req.body.email});
+    if (optExist) return res.status(200).json({result: 'nOK', message: 'Check your otps', data: {}});
+
     try {
         req.body.password = await bcrypt.hash(req.body.password, 8);
         req.body.img_user = 'userimagedefault.png'
-
         const data = await TeacherRegister.create(req.body);
         
         const userSchema = {
