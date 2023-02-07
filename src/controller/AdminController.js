@@ -65,6 +65,7 @@ exports.getkpi = async(req,res) => {
                 posted_timestamp: data[i].posted_timestamp,
                 event_type: data[i].event_type,
                 event_img: data[i].event_img,
+                event_img_list : data[i].event_img_list,
                 activity_hour: data[i].activity_hour,
                 event_status: data[i].event_status,
                 permissions_type: data[i].permissions_type
@@ -102,6 +103,7 @@ exports.getactivity = async(req,res) => {
                 posted_timestamp: data[i].posted_timestamp,
                 event_type: data[i].event_type,
                 event_img: data[i].event_img,
+                event_img_list: data[i].event_img_list,
                 activity_hour: data[i].activity_hour,
                 event_status: data[i].event_status,
                 permissions_type: data[i].permissions_type
@@ -215,6 +217,7 @@ exports.getkpiactive = async(req,res) => {
             posted_timestamp: data[i].posted_timestamp,
             event_type: data[i].event_type,
             event_img: data[i].event_img,
+            event_img_list: data[i].event_img_list,
             activity_hour: data[i].activity_hour,
             event_status: data[i].event_status,
             permissions_type: data[i].permissions_type
@@ -254,6 +257,7 @@ exports.getactivityactive = async(req,res) => {
             posted_timestamp: data[i].posted_timestamp,
             event_type: data[i].event_type,
             event_img: data[i].event_img,
+            event_img_list :data[i].event_img_list,
             activity_hour: data[i].activity_hour,
             event_status: data[i].event_status,
             permissions_type: data[i].permissions_type
@@ -353,6 +357,7 @@ exports.editevent = async (req,res) => {
         data.posted_timestamp = currentTime,
         data.event_type = req.body.event_type,
         data.event_img = req.body.event_img,
+        data.event_img_list = req.body.event_img_list,
         data.activity_hour = req.body.activity_hour,
         data.event_status = req.body.event_status
 
@@ -366,6 +371,7 @@ exports.editevent = async (req,res) => {
             posted_timestamp : data.posted_timestamp,
             event_type : data.event_type,
             event_img : data.event_img,
+            event_img_list : data.event_img_list,
             activity_hour : data.activity_hour,
             event_status : data.event_status,
             permissions_type : data.per,
