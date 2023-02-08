@@ -133,9 +133,23 @@ exports.getrequeststudent = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                event: data[i].event,
-                user: data[i].user,
-                user_id: data[i].user_id,
+                user : {
+                    id_user : data._id,
+                    user_id : data.user_id,
+                    name : data.name,
+                },
+                event : {
+                    id_event : data._id,
+                    name_event : data.name_event,
+                    detail_event : data.detail_event,
+                    start_date : data.start_date,
+                    end_date : data.end_date,
+                    posted_timestamp : data.posted_timestamp,
+                    event_type : data.event_type,
+                    event_img : data.event_img,
+                    activity_hour : data.activity_hour,
+                    event_status : data.event_status ,
+                },
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
                 uploaded_img: data[i].uploaded_img,
@@ -170,9 +184,23 @@ exports.getrequestteacher = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                user: data[i].user,
-                event: data[i].event,
-                user_id: data[i].user_id,
+                user : {
+                    id_user : data._id,
+                    user_id : data.user_id,
+                    name : data.name,
+                },
+                event : {
+                    id_event : data._id,
+                    name_event : data.name_event,
+                    detail_event : data.detail_event,
+                    start_date : data.start_date,
+                    end_date : data.end_date,
+                    posted_timestamp : data.posted_timestamp,
+                    event_type : data.event_type,
+                    event_img : data.event_img,
+                    activity_hour : data.activity_hour,
+                    event_status : data.event_status ,
+                },
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
                 uploaded_img: data[i].uploaded_img,
@@ -386,7 +414,7 @@ exports.editevent = async (req,res) => {
 
 exports.updateReq = async (req,res) => {
 
-    const id = req.headers.id_req
+    const id = req.headers.id_req //edit
 
     const { error } = createRequestValidation(req.body);
     if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
@@ -401,8 +429,23 @@ exports.updateReq = async (req,res) => {
         const newData = await Request.findByIdAndUpdate(id, data)
 
         const schema = {
-            user_id : data.user_id,
-            id_event : data.id_event,
+            user : {
+                id_user : data._id,
+                user_id : data.user_id,
+                name : data.name,
+            },
+            event : {
+                id_event : data._id,
+                name_event : data.name_event,
+                detail_event : data.detail_event,
+                start_date : data.start_date,
+                end_date : data.end_date,
+                posted_timestamp : data.posted_timestamp,
+                event_type : data.event_type,
+                event_img : data.event_img,
+                activity_hour : data.activity_hour,
+                event_status : data.event_status ,
+            },
             start_date : data.start_date,
             end_date : data.end_date,
             uploaded_img : data.uploaded_img,

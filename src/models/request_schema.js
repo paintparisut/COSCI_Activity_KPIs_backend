@@ -16,6 +16,7 @@ const schema = mongoose.Schema ({
         posted_timestamp : {type: Date, default: Date.now},
         event_type : String,
         event_img : {type:String, default:"imgactivity.png"},
+        event_img_list : [String],
         activity_hour : Number,
         event_status : Boolean ,
     },
