@@ -8,6 +8,7 @@ router.get('/request-history',jwt.verify,StudentController.reqHistory)
 router.get('/activity-active',jwt.verify,StudentController.getactivityactive)
 router.post('/request',jwt.verify,StudentController.createRequest)
 router.patch('/changepassword',jwt.verify,StudentController.changepassword)
+router.get('/eventstudent/:id',jwt.verify,StudentController.getsingleevent)
 
 
 module.exports = router;

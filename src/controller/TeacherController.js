@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const TeacherRegister = require('../models/teacher_registered_schema');
 const {createRequestValidation} = require('../services/validation/createRequestValidation');
 const {changePasswordValidation} = require('../services/validation/changPasswordValidate');
+const { id } = require('@hapi/joi/lib/base');
 
 exports.reqHistory = async(req,res) => { 
     const userid = req.user_id 
@@ -167,4 +168,29 @@ exports.createRequest = async(req,res) => {
     }catch (e){
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
+}
+
+exports.getsinglekpi = async(req,res) => { 
+    const userid = req.userId 
+    const idparams = req.params.id
+
+    console.log(idparams)
+
+    if (!idparams) return res.status(400).json({result: 'Bad request', message: ''});
+
+try {
+    const user_data = await TeacherRegister.findById(userid);
+    if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+    const data = await Event.findOne({ 
+        _id: idparams
+     } )
+
+    if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+    console.log("eiei",idparams)
+    res.status(200).json({result: 'OK', message: 'success get single kpisdata', data: data});
+} catch (e) {
+    res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+}
 }

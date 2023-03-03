@@ -173,3 +173,28 @@ exports.changepassword = async (req,res) => {
     }
 }
 
+
+exports.getsingleevent = async(req,res) => { 
+    const userid = req.userId 
+    const idparams = req.params.id
+
+    console.log(idparams)
+
+    if (!idparams) return res.status(400).json({result: 'Bad request', message: ''});
+
+try {
+    const user_data = await StudentRegister.findById(userid);
+    if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+    const data = await Event.findOne({ 
+        _id: idparams
+     } )
+
+    if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+    console.log("eiei",idparams)
+    res.status(200).json({result: 'OK', message: 'success get single event', data: data});
+} catch (e) {
+    res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+}
+}
