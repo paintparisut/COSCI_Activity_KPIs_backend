@@ -178,7 +178,6 @@ exports.getsingleevent = async(req,res) => {
     const userid = req.userId 
     const idparams = req.params.id
 
-    console.log(idparams)
 
     if (!idparams) return res.status(400).json({result: 'Bad request', message: ''});
 
