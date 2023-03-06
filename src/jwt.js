@@ -49,6 +49,7 @@ module.exports = {
       // if everything good, save to request for use in other routes
       req.userId = decoded.id
       req.user_id = decoded.user_id
+      req.role = decoded.role
       next();
     });
   },

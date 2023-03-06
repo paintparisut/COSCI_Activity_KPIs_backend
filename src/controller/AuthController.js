@@ -183,7 +183,7 @@ exports.verifystudent = async (req,res) => {
 
         const payload = {
             id : data._id,
-            user_id : data.user_id
+            user_id : data.user_id,
         }
 
         const token = jwt.sign(payload);
@@ -242,7 +242,8 @@ exports.verifyteacher = async (req,res) => {
 
         const payload = {
             id : data._id,
-            user_id : data.user_id
+            user_id : data.user_id,
+            role : data.role
         }
 
         const token = jwt.sign(payload);
@@ -459,7 +460,8 @@ exports.loginTeacher = async (req,res) => {
                     }
                     const payload = {
                         id : data._id,
-                        user_id : data.user_id
+                        user_id : data.user_id,
+                        role : data.role
                     }
     
                     const token = jwt.sign(payload);
