@@ -511,6 +511,7 @@ exports.loginTeacher = async (req,res) => {
 
 exports.StudentUploaded = async(req,res) => { 
     const user_id = req.body.user_id
+    const test = req.body.test
 
     const { error } = fetchUserUploadedValidation(req.body);
     if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
@@ -542,6 +543,7 @@ try {
 
 exports.TeacherUploaded = async(req,res) => { 
     const user_id = req.body.user_id
+    const test = req.body.test
 
     const { error } = fetchUserUploadedValidation(req.body);
     if (error) return res.status(200).json({result:'nOK',masage:error.details[0].message, data:{}});
