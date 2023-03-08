@@ -416,7 +416,7 @@ exports.loginStudent = async (req,res) => {
                     }
 
                     mailer(data.email,'Verify your account',`คุณ, ${data.name} <br><br>username : ${data.user_id} <br><br>รหัสยืนยันการสมัครสมาชิก : ${OTP_Schema.otp}`)
-                    res.status(200).json({ result: 'OK', message: 'please verify account by email in 15 minutes', data: userSchema})
+                    res.status(200).json({ result: 'Wait', message: 'please verify account by email in 15 minutes', data: userSchema})
                 } 
             } else {
                 res.status(200).json({ result: 'nOK', message: 'invalid username or password', data: {}});
@@ -496,7 +496,7 @@ exports.loginTeacher = async (req,res) => {
                     }
 
                     mailer(data.email,'Verify your account',`คุณ, ${data.name} <br><br>username : ${data.user_id} <br><br>รหัสยืนยันการสมัครสมาชิก : ${OTP_Schema.otp}`)
-                    res.status(200).json({ result: 'OK', message: 'please verify account by email in 15 minutes', data: userSchema})
+                    res.status(200).json({ result: 'Wait', message: 'please verify account by email in 15 minutes', data: userSchema})
                 } 
             } else {
                 res.status(200).json({ result: 'nOK', message: 'invalid username or password', data: {}});
