@@ -522,9 +522,9 @@ try {
         user_id: user_id
     } )
 
-    if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+    if(!data) return res.status(200).json({result: 'Not found', message: '', data: {}});
 
-    if (data.register_check == true) return res.status(400).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
+    if (data.register_check == true) return res.status(200).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
     
     const userSchema = {
         user_id : data.user_id,
@@ -554,9 +554,9 @@ try {
         user_id: user_id
     } )
 
-    if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+    if(!data) return res.status(200).json({result: 'Not found', message: '', data: {}});
 
-    if (data.register_check == true) return res.status(403).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
+    if (data.register_check == true) return res.status(200).json({result: 'nOK', message: 'เป็นสมาชิกอยู่แล้ว', data: {}});
     
     const userSchema = {
         user_id : data.user_id,
