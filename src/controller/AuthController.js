@@ -186,7 +186,7 @@ exports.verifystudent = async (req,res) => {
             user_id : data.user_id,
         }
 
-        const token = jwt.sign(payload);
+        const token = jwt.sign(payload, '1h');
 
         res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema ,token:token});
 
@@ -246,7 +246,7 @@ exports.verifyteacher = async (req,res) => {
             role : data.role
         }
 
-        const token = jwt.sign(payload);
+        const token = jwt.sign(payload, '1h');
 
         res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema ,token:token});
 
@@ -381,7 +381,7 @@ exports.loginStudent = async (req,res) => {
                         user_id : data.user_id
                     }
     
-                    const token = jwt.sign(payload);
+                    const token = jwt.sign(payload, '1h');
                     console.log(token)
     
                     res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema, token:token });
@@ -464,7 +464,7 @@ exports.loginTeacher = async (req,res) => {
                         role : data.role
                     }
     
-                    const token = jwt.sign(payload);
+                    const token = jwt.sign(payload, '1h');
                     console.log(token)
     
                     res.status(200).header('Authorization', `Bearer ${token}`).json({ result: 'OK', message: 'success sign in', data: userSchema ,token:token});
