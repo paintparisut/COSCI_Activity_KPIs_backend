@@ -5,8 +5,8 @@ var publicKEY = fs.readFileSync(path.join(__dirname + "/public.key"), "utf8");
 var privateKEY = fs.readFileSync(path.join(__dirname + "/private.key"), "utf8");
 
 var i = "COSCI"; // Issuer (Software organization who issues the token)
-var s = "parisut.paint@gmail.com"; // Subject (intended user of the token)
-var a = "http://www.cosciactivitykpi.com"; // Audience (Domain within which this token will live and function)
+var s = "cosci.activitykpi@gmail.com"; // Subject (intended user of the token)
+var a = "http://www.kpi.cosci.swu.ac..th"; // Audience (Domain within which this token will live and function)
 
 module.exports = {
   sign: (payload) => {
