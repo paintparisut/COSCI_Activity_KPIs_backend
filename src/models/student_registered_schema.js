@@ -9,7 +9,6 @@ const schema = mongoose.Schema ({
     major : String,
     email : String,
     tel : String,
-    teacher : String,
     img_user : {type:String, default:"userimgdefault.jpg"}
 });
 
