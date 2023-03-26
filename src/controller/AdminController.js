@@ -416,9 +416,6 @@ exports.updateReq = async (req,res) => {
 
     const id = req.headers.id_req //edit
 
-    const { error } = createRequestValidation(req.body);
-    if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
-
     try {
 
         const data = await Request.findById(id)
