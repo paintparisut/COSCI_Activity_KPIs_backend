@@ -69,6 +69,7 @@ try {
             posted_timestamp: data[i].posted_timestamp,
             event_type: data[i].event_type,
             event_img: data[i].event_img,
+            event_img_list: data[i].event_img_list,
             activity_hour: data[i].activity_hour,
             event_status: data[i].event_status,
             permissions_type: data[i].permissions_type
