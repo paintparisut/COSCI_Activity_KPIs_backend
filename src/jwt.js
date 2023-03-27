@@ -9,12 +9,13 @@ var s = "cosci.activitykpi@gmail.com"; // Subject (intended user of the token)
 var a = "http://www.kpi.cosci.swu.ac..th"; // Audience (Domain within which this token will live and function)
 
 module.exports = {
-  sign: (payload) => {
+  sign: (payload, expiresIn) => {
     // Token signing options
     var signOptions = {
       issuer: i,
       subject: s,
       audience: a,
+      expiresIn: expiresIn,
       algorithm: 'RS256',
     };
     return jwt.sign(payload, privateKEY, signOptions);
