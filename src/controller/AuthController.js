@@ -182,8 +182,8 @@ exports.verifystudent = async (req,res) => {
         await Otps.findByIdAndDelete(data._id);
 
         const payload = {
-            id : data._id,
-            user_id : data.user_id,
+            id : user_data._id,
+            user_id : user_data.user_id,
         }
 
         const token = jwt.sign(payload, '1h');
@@ -241,9 +241,9 @@ exports.verifyteacher = async (req,res) => {
         await Otps.findByIdAndDelete(data._id);
 
         const payload = {
-            id : data._id,
-            user_id : data.user_id,
-            role : data.role
+            id : user_data._id,
+            user_id : user_data.user_id,
+            role : user_data.role
         }
 
         const token = jwt.sign(payload, '1h');
