@@ -367,7 +367,7 @@ exports.teacherCRUD = async(req,res) => {
 
 exports.editevent = async (req,res) => {
 
-    const id = req.headers.id_event
+    const id = req.params.id_event
 
     const { error } = createEventValidation(req.body);
     if (error) return res.status(200).json({result: 'nOK', message: error.details[0].message, data: {}});
@@ -414,7 +414,7 @@ exports.editevent = async (req,res) => {
 
 exports.updateReq = async (req,res) => {
 
-    const id = req.headers.id_req //edit
+    const id = req.body.id_req //edit
 
     try {
 
@@ -459,3 +459,43 @@ exports.updateReq = async (req,res) => {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
     }
 }
+
+
+exports.deletekpiandreq = async (req,res) => {
+
+    const id = req.params.id_event
+
+    try {
+
+        const data = await Event.findById(id)
+        if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+        await Request.deleteMany({"event.id_event" :id })
+        await Event.findByIdAndDelete(id)
+
+        res.status(200).json({result: 'OK', message: 'success delete event and request'});
+        
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
+}
+
+
+exports.deleteevent = async (req,res) => {
+
+    const id = req.params.id_event
+
+    try {
+
+        const data = await Event.findById(id)
+        if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+        await Event.findByIdAndDelete(id)
+
+        res.status(200).json({result: 'OK', message: 'success delete event'});
+        
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
+}
+

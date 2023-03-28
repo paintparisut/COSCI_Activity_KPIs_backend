@@ -15,6 +15,8 @@ router.get('/data',jwt.verify,AdminController.getEventData)
 //kpi
 router.get('/kpi-dashboard',jwt.verify,AdminController.getkpi)
 router.get('/kpi-active-dashboard',jwt.verify,AdminController.getkpiactive)
+router.delete('/delete-kpi-req',jwt.verify,AdminController.deletekpiandreq)
+router.delete('/delete-event',jwt.verify,AdminController.deleteevent)
 
 //student req
 router.get('/reqstudent-dashboard',jwt.verify,AdminController.getrequeststudent)
