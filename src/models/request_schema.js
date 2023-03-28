@@ -22,7 +22,7 @@ const schema = mongoose.Schema ({
     },
     start_date : Date,
     end_date : Date,
-    uploaded_img : String,
+    uploaded_img : [String],
     uploaded_pdf : String,
     date_request : {type: Date, default: Date.now},
     status_request : String,
