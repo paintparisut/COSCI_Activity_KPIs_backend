@@ -10,7 +10,7 @@ const storageImg = multer.diskStorage({
         cb(null, 'public/img/')
     },
     filename: (req, file, cb) => {
-        cb(null, currentTime + '-' + file.originalname)
+        cb(null, currentTime + '-' + file.originalname.replace(/\s+/g, ''))
     }
 });
 
@@ -25,7 +25,7 @@ const storagePdf = multer.diskStorage({
 
 exports.uploadImage = async (req,res) => {
     const user_id = req.userId
-    const uploadImg = multer({storage: storageImg}).array('img');
+    const uploadImg = multer({storage: storageImg}).array('file');
 
     uploadImg( req, res, async (err) => {
         if (err) {
