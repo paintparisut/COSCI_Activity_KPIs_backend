@@ -20,6 +20,7 @@ router.delete('/delete-event',jwt.verify,AdminController.deleteevent)
 
 //student req
 router.get('/reqstudent-dashboard',jwt.verify,AdminController.getrequeststudent)
+router.post('/studentjoined',jwt.verify,AdminController.studentjoined)
 
 //teacher req
 router.get('/reqteacher-dashboard',jwt.verify,AdminController.getrequestteacher)

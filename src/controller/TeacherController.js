@@ -14,7 +14,7 @@ exports.reqHistory = async(req,res) => {
 
         const data = await Request.find({ 
             permissions_request: "teacher" ,
-            user_id: userid
+            "user.user_id": userid
         } )
 
         if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
@@ -24,8 +24,8 @@ exports.reqHistory = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                id_event: data[i].id_event,
-                user_id: data[i].user_id,
+                user : data[i].user,
+                event : data[i].event,
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
                 uploaded_img: data[i].uploaded_img,

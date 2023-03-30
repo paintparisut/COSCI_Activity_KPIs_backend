@@ -133,23 +133,8 @@ exports.getrequeststudent = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                user : {
-                    id_user : data._id,
-                    user_id : data.user_id,
-                    name : data.name,
-                },
-                event : {
-                    id_event : data._id,
-                    name_event : data.name_event,
-                    detail_event : data.detail_event,
-                    start_date : data.start_date,
-                    end_date : data.end_date,
-                    posted_timestamp : data.posted_timestamp,
-                    event_type : data.event_type,
-                    event_img : data.event_img,
-                    activity_hour : data.activity_hour,
-                    event_status : data.event_status ,
-                },
+                user : data[i].user,
+                event : data[i].event,
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
                 uploaded_img: data[i].uploaded_img,
@@ -184,23 +169,8 @@ exports.getrequestteacher = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                user : {
-                    id_user : data._id,
-                    user_id : data.user_id,
-                    name : data.name,
-                },
-                event : {
-                    id_event : data._id,
-                    name_event : data.name_event,
-                    detail_event : data.detail_event,
-                    start_date : data.start_date,
-                    end_date : data.end_date,
-                    posted_timestamp : data.posted_timestamp,
-                    event_type : data.event_type,
-                    event_img : data.event_img,
-                    activity_hour : data.activity_hour,
-                    event_status : data.event_status ,
-                },
+                user : data[i].user,
+                event : data[i].event,
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
                 uploaded_img: data[i].uploaded_img,
@@ -499,3 +469,50 @@ exports.deleteevent = async (req,res) => {
     }
 }
 
+
+exports.studentjoined = async (req,res) => {
+
+    const id = req.body.id_event
+    const userId = req.userId
+
+    try {
+
+        const user_data = await TeacherRegister.findById(userId);
+        if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
+
+
+
+       const data = await Request.find({
+            status_request : "รับเรื่องแล้ว",
+            permissions_request : "student",
+            "event.id_event" : id
+
+        })
+        
+        if(!data) return res.status(404).json({result: 'Not found data', message: 'data not found', data: {}});
+
+        const student_data = []
+
+        for(let i = 0; i < data.length; i++) {
+            const schema = {
+                _id: data[i]._id,
+                user : data[i].user,
+                event : data[i].event,
+                start_date: data[i].start_date,
+                end_date: data[i].end_date,
+                uploaded_img: data[i].uploaded_img,
+                uploaded_pdf: data[i].uploaded_pdf,
+                date_request: data[i].date_request,
+                status_request: data[i].status_request,
+                type_request: data[i].type_request,
+                permissions_request: data[i].permissions_request
+            }
+            student_data.push(schema)
+        }
+    
+        res.status(200).json({result: 'OK', message: 'success get data', data: {data: student_data}});
+        
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {data: data}});
+    }
+}
