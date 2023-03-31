@@ -62,26 +62,17 @@ exports.createRequest = async(req,res) => {
         req.body.date_request = Date.now()
         req.body.permissions_request = "student"
 
+  
         const schema = {
-            user : {
-                id_user : user_data._id,
-                user_id : user_data.user_id,
-                name : user_data.name,
-                student_id : user_data.student_id,
-            },
-            event : {
-                id_event : event_data._id,
-                name_event : event_data.name_event,
-                detail_event : event_data.detail_event,
-                start_date : event_data.start_date,
-                end_date : event_data.end_date,
-                posted_timestamp : event_data.posted_timestamp,
-                event_type : event_data.event_type,
-                event_img : event_data.event_img,
-                event_img_list : event_data.event_img_list,
-                activity_hour : event_data.activity_hour,
-                event_status : event_data.event_status ,
-            },
+            id_user : user_data._id,
+            user_id : user_data.user_id,
+            name : user_data.name,
+            student_id : user_data.student_id,
+            id_event : event_data._id,
+            name_event : event_data.name_event,
+            event_img : event_data.event_img,
+            event_type : event_data.event_type,
+            activity_hour : event_data.activity_hour,
             start_date : req.body.start_date,
             end_date : req.body.end_date,
             uploaded_img : req.body.uploaded_img,

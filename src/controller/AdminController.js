@@ -133,8 +133,13 @@ exports.getrequeststudent = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                user : data[i].user,
-                event : data[i].event,
+                id_user : data[i].id_user,
+                user_id : data[i].user_id,
+                name : data[i].userId,
+                student_id : data[i].student_id,
+                id_event : data[i].id_event,
+                name_event : data[i].name_event,
+                event_img : data[i].event_img,
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
                 uploaded_img: data[i].uploaded_img,
@@ -169,8 +174,13 @@ exports.getrequestteacher = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                user : data[i].user,
-                event : data[i].event,
+                id_user : data[i].id_user,
+                user_id : data[i].user_id,
+                name : data[i].userId,
+                student_id : data[i].student_id,
+                id_event : data[i].id_event,
+                name_event : data[i].name_event,
+                event_img : data[i].event_img,
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
                 uploaded_img: data[i].uploaded_img,
@@ -396,23 +406,13 @@ exports.updateReq = async (req,res) => {
         const newData = await Request.findByIdAndUpdate(id, data)
 
         const schema = {
-            user : {
-                id_user : data._id,
-                user_id : data.user_id,
-                name : data.name,
-            },
-            event : {
-                id_event : data._id,
-                name_event : data.name_event,
-                detail_event : data.detail_event,
-                start_date : data.start_date,
-                end_date : data.end_date,
-                posted_timestamp : data.posted_timestamp,
-                event_type : data.event_type,
-                event_img : data.event_img,
-                activity_hour : data.activity_hour,
-                event_status : data.event_status ,
-            },
+            id_user : data[i].id_user,
+            user_id : data[i].user_id,
+            name : data[i].userId,
+            student_id : data[i].student_id,
+            id_event : data[i].id_event,
+            name_event : data[i].name_event,
+            event_img : data[i].event_img,
             start_date : data.start_date,
             end_date : data.end_date,
             uploaded_img : data.uploaded_img,
@@ -440,7 +440,7 @@ exports.deletekpiandreq = async (req,res) => {
         const data = await Event.findById(id)
         if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
 
-        await Request.deleteMany({"event.id_event" :id })
+        await Request.deleteMany({id_event :id })
         await Event.findByIdAndDelete(id)
 
         res.status(200).json({result: 'OK', message: 'success delete event and request'});
@@ -485,7 +485,7 @@ exports.studentjoined = async (req,res) => {
        const data = await Request.find({
             status_request : "รับเรื่องแล้ว",
             permissions_request : "student",
-            "event.id_event" : id
+            id_event : id
 
         })
         
@@ -496,8 +496,13 @@ exports.studentjoined = async (req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                user : data[i].user,
-                event : data[i].event,
+                id_user : data[i].id_user,
+                user_id : data[i].user_id,
+                name : data[i].userId,
+                student_id : data[i].student_id,
+                id_event : data[i].id_event,
+                name_event : data[i].name_event,
+                event_img : data[i].event_img,
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
                 uploaded_img: data[i].uploaded_img,

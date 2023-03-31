@@ -24,8 +24,15 @@ exports.reqHistory = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                user : data[i].user,
-                event : data[i].event,
+                id_user : data[i].id_user,
+                user_id : data[i].user_id,
+                name : data[i].userId,
+                student_id : data[i].student_id,
+                id_event : data[i].id_event,
+                name_event : data[i].name_event,
+                event_img : data[i].event_img,
+                event_type : data[i].event_type,
+                activity_hour : data[i].activity_hour,        
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
                 uploaded_img: data[i].uploaded_img,
@@ -135,25 +142,18 @@ exports.createRequest = async(req,res) => {
 
         req.body.date_request = Date.now()
         req.body.permissions_request = "teacher"
+       
 
         const schema = {
-            user : {
-                id_user : user_data._id,
-                user_id : user_data.user_id,
-                name : user_data.name,
-            },
-            event : {
-                id_event : event_data._id,
-                name_event : event_data.name_event,
-                detail_event : event_data.detail_event,
-                start_date : event_data.start_date,
-                end_date : event_data.end_date,
-                posted_timestamp : event_data.posted_timestamp,
-                event_type : event_data.event_type,
-                event_img : event_data.event_img,
-                activity_hour : event_data.activity_hour,
-                event_status : event_data.event_status ,
-            },
+
+            id_user : user_data._id,
+            user_id : user_data.user_id,
+            name : user_data.name,
+            id_event : event_data._id,
+            name_event : event_data.name_event,
+            event_type : event_data.event_type,
+            event_img : event_data.event_img,
+            activity_hour : event_data.activity_hour,
             start_date : req.body.start_date,
             end_date : req.body.end_date,
             uploaded_img : req.body.uploaded_img,

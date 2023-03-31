@@ -1,12 +1,10 @@
 const mongoose = require("mongoose")
 
 const schema = mongoose.Schema ({
-    user : {
-        id_user : String,
-        user_id : String,
-        name : String,
-        student_id : String,
-    },
+    id_user : String,
+    user_id : String,
+    name : String,
+    student_id : String,
     event : {
         id_event : String,
         name_event : String,
