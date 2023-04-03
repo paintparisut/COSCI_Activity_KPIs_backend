@@ -8,6 +8,7 @@ const { id } = require('@hapi/joi/lib/base');
 
 exports.reqHistory = async(req,res) => { 
     const userid = req.user_id 
+    
     try {
         const user_data = await Event.find({user_id:userid});
         if(!user_data) return res.status(404).json({result: 'Not found', message: 'validation', data: {}});
