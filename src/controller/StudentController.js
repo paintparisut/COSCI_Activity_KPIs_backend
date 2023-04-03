@@ -25,8 +25,15 @@ exports.reqHistory = async(req,res) => {
         for(let i = 0; i < data.length; i++) {
             const schema = {
                 _id: data[i]._id,
-                user : data[i].user,
-                event : data[i].event,
+                id_user : data[i].id_user,
+                user_id : data[i].user_id,
+                name : data[i].userId,
+                student_id : data[i].student_id,
+                id_event : data[i].id_event,
+                name_event : data[i].name_event,
+                event_img : data[i].event_img,
+                event_type : data[i].event_type,
+                activity_hour : data[i].activity_hour,        
                 start_date: data[i].start_date,
                 end_date: data[i].end_date,
                 uploaded_img: data[i].uploaded_img,
