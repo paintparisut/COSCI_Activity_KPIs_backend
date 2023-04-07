@@ -27,7 +27,7 @@ exports.reqHistory = async(req,res) => {
                 _id: data[i]._id,
                 id_user : data[i].id_user,
                 user_id : data[i].user_id,
-                name : data[i].userId,
+                name : data[i].name,
                 student_id : data[i].student_id,
                 id_event : data[i].id_event,
                 name_event : data[i].name_event,
