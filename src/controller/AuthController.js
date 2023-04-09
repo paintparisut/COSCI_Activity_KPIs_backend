@@ -690,7 +690,7 @@ exports.forgotpasswordteacher = async (req,res) => {
         const newpassword = generatePassword()
 
         const user_data = await TeacherRegister.findOne({user_id: userid})
-        if(!user_data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+        if(!user_data) return res.status(200).json({result: 'Not found', message: '', data: {}});
 
         user_data.password = await bcrypt.hash(newpassword, 8);
 
