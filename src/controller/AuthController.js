@@ -530,7 +530,7 @@ try {
         user_id : data.user_id,
         name : data.name,
         major : data.major,
-        teacher : data.major,
+        teacher : data.teacher,
         register_check: data.register_check
     }
 
