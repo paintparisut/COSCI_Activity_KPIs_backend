@@ -9,7 +9,7 @@ const schema = mongoose.Schema ({
     major : String,
     email : String,
     tel : String,
-    img_user : {type:String, default:"userimgdefault.jpg"}
+    img_user : {type:String, default:"userimgdefault.png"}
 });
 
 schema.index({user_id: 1,student_id: 4},{ unique: true ,unique: true})
