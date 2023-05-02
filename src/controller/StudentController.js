@@ -27,7 +27,7 @@ exports.reqHistory = async(req,res) => {
                 _id: data[i]._id,
                 id_user : data[i].id_user,
                 user_id : data[i].user_id,
-                name : data[i].userId,
+                name : data[i].name,
                 student_id : data[i].student_id,
                 id_event : data[i].id_event,
                 name_event : data[i].name_event,
@@ -194,4 +194,22 @@ try {
 } catch (e) {
     res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
 }
+}
+
+exports.deletereq = async (req,res) => {
+
+    const id = req.body._id
+
+    try {
+
+        const data = await Request.findById(id)
+        if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+        await Request.findByIdAndDelete(id)
+
+        res.status(200).json({result: 'OK', message: 'success delete request'});
+        
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
 }

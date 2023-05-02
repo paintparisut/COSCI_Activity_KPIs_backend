@@ -194,3 +194,22 @@ try {
     res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
 }
 }
+
+
+exports.deletereq = async (req,res) => {
+
+    const id = req.body._id
+
+    try {
+
+        const data = await Request.findById(id)
+        if(!data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+
+        await Request.findByIdAndDelete(id)
+
+        res.status(200).json({result: 'OK', message: 'success delete request'});
+        
+    } catch (e) {
+        res.status(500).json({result: 'Internal Server Error', message: '', data: {}});
+    }
+}
