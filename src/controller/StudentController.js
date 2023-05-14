@@ -61,10 +61,10 @@ exports.createRequest = async(req,res) => {
     try {
         
         const user_data = await StudentRegister.findById(userId)
-        if(!user_data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+        if(!user_data) return res.status(404).json({result: 'Not found', message: '1', data: {}});
 
         const event_data = await Event.findById(req.body.id_event)
-        if(!event_data) return res.status(404).json({result: 'Not found', message: '', data: {}});
+        if(!event_data) return res.status(404).json({result: 'Not found', message: '2', data: {}});
 
         req.body.date_request = Date.now()
         req.body.permissions_request = "student"
@@ -207,7 +207,7 @@ exports.deletereq = async (req,res) => {
 
         await Request.findByIdAndDelete(id)
 
-        res.status(200).json({result: 'OK', message: 'success delete request'});
+        res.status(200).json({result: 'OK', message: 'success delete request',data});
         
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});

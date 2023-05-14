@@ -207,7 +207,7 @@ exports.deletereq = async (req,res) => {
 
         await Request.findByIdAndDelete(id)
 
-        res.status(200).json({result: 'OK', message: 'success delete request'});
+        res.status(200).json({result: 'OK', message: 'success delete request',data});
         
     } catch (e) {
         res.status(500).json({result: 'Internal Server Error', message: '', data: {}});

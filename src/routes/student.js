@@ -9,6 +9,7 @@ router.get('/activity-active',jwt.verify,StudentController.getactivityactive)
 router.post('/request',jwt.verify,StudentController.createRequest)
 router.patch('/changepassword',jwt.verify,StudentController.changepassword)
 router.get('/event/:id',jwt.verify,StudentController.getsingleevent)
+router.delete('/delete',StudentController.deletereq)
 
 
 module.exports = router;
