@@ -371,7 +371,7 @@ exports.loginStudent = async (req,res) => {
                         name: data.name,
                         student_id: data.student_id,
                         teacher: data.teacher,
-                        major: data.teacher,
+                        major: data.major,
                         email: data.email,
                         tel: data.tel,
                         img_user: data.img_user
